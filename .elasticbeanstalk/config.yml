@@ -1,0 +1,10 @@
+branch-defaults:
+  master:
+    environment: patternlab-dev
+global:
+  application_name: patternlab
+  default_ec2_keyname: devenv-key
+  default_platform: PHP 5.6
+  default_region: null
+  profile: null
+  sc: git
