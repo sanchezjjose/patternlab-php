@@ -1,17 +1,16 @@
-FROM    ubuntu:14.04
+FROM php
 
-RUN     apt-get update
-RUN     apt-get install --yes curl
-RUN     sudo apt-get install apache2 --yes
-RUN     sudo apt-get install php5 --yes
-RUN     sudo apt-get install libapache2-mod-php5 --yes
-RUN     sudo /etc/init.d/apache2 restart
+RUN apt-get update && apt-get install -y wget
 
-# Bundle app source
-COPY . /var/www/html/
+RUN wget https://github.com/pattern-lab/patternlab-php/archive/v1.0.0.tar.gz -O /tmp/pkg.tar.gz && \
+    tar -zxf /tmp/pkg.tar.gz --xform='s/[^\/]*/patternlab/' -C /opt
 
-WORKDIR /var/www/html/
+WORKDIR /opt/patternlab
 
-EXPOSE  80
+RUN php core/builder.php -g
 
-CMD ["php", "core/builder.php", "-wr"]
+WORKDIR /opt/patternlab/public
+
+EXPOSE 8000
+
+CMD ["php", "-S", "0.0.0.0:8000"]
