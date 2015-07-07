@@ -1,3 +1,5 @@
+
+# build an image from the php image
 FROM php
 
 RUN apt-get update && apt-get install -y wget
@@ -13,4 +15,5 @@ WORKDIR /opt/patternlab/public
 
 EXPOSE 8000
 
+# Use built in PHP web server to serve the files
 CMD ["php", "-S", "0.0.0.0:8000"]
